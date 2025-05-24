@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate') %>
+
+<h1><%= task.title %></h1>
+<ul>
+    <li>カテゴリ: <%= task.category %></li>
+    <li>備考: <%= task.description %></li>
+</ul>
+<a href="/tasks/<%= task._id %>/edit" class="btn btn-primary" role="button">編集</a>
+<form action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
+    <button type="submit" class="btn btn-danger">削除</button>
+</form>
+<a href="/tasks/home">やること一覧へ</a>

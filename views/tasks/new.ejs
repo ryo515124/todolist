@@ -1,0 +1,42 @@
+<% layout('layouts/boilerplate') %>
+
+<h1>タスクを追加</h1>
+<form action="/tasks" method="POST" class="validated-form" novalidate>
+    <div>
+        <label class="form-label"for="title">やること</label>
+        <input class="form-control" type="text" name="task[title]" placeholder="何する？" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <label for="category" class="form-label">カテゴリー</label>
+        <select class="form-control" name="task[category]" id="category" required>
+            <% for(let category of categories) { %>
+                <option value="<%= category %>"><%= category %></option>
+            <% } %>
+         </select>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <label for="description" class="form-label">予定時間</label>
+        <input class="form-control" type="datetime-local" name="task[time]" id="time" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <label for="description">備考</label>
+        <input class="form-control" type="text" name="task[description]" id="description" placeholder="備考" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">登録</button>
+    </div>
+</form>
+<a href="/tasks/home">戻る</a>
+
