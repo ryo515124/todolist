@@ -9,6 +9,7 @@ const ExpressError = require('./utils/ExpressError');
 const Joi = require('joi');
 const { todoSchema } = require('./schema');
 const dayjs = require('dayjs');
+const taskRoutes = require('./routes/taskRoutes');
 
 mongoose.connect('mongodb://localhost:27017/todolist', {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
@@ -28,6 +29,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use('/tasks', taskRoutes);
 
 const taskValidation = (req, res, next) => {
     // if (!req.body) throw new ExpressError('空のデータです', 400);
@@ -40,49 +42,6 @@ const taskValidation = (req, res, next) => {
         next();
     }
 }
-
-const categories = ['仕事', '勉強','プライベート'];
-
-app.get('/tasks/home', catchAsync(async(req, res) => {
-    const tasks = await Task.find({});
-    res.render('tasks/home', { tasks })
-}));
-
-app.get('/tasks/new', catchAsync(async(req, res) => {
-    res.render('tasks/new', { categories })
-}));
-
-app.post('/tasks', taskValidation, catchAsync(async(req, res, next) => {
-    const task = new Task(req.body.task);
-    await task.save();
-    res.redirect(`/tasks/${task._id}`);
-}));
-
-
-app.get('/tasks/:id/edit', catchAsync(async(req, res) => {
-    const { id } = req.params;
-    const task = await Task.findById(id);
-    res.render('tasks/edit', { task, categories });
-}));
-
-app.put('/tasks/:id', taskValidation, catchAsync(async(req, res, next) => {
-        console.log(req.body);
-        const { id } = req.params;
-        const task = await Task.findByIdAndUpdate(id, req.body.task);
-        res.redirect(`/tasks/${task._id}`);
-}));
-
-app.get('/tasks/:id', catchAsync(async(req, res) => {
-    const { id } = req.params;
-    const task = await Task.findById(id);
-    res.render('tasks/show', { task });
-}));
-
-app.delete('/tasks/:id',  catchAsync(async(req, res) => {
-    const { id } = req.params;
-    await Task.findByIdAndDelete(id);
-    res.redirect('/tasks/home');
-}));
 
 app.use((req, res, next) => {
     next(new ExpressError('ページが見つかりませんでした', 404));

@@ -1,13 +1,15 @@
 <% layout('layouts/boilerplate') %>
 
 <h2>タスク一覧</h2>
-<!--<select id="sortSelect" class="form-select" aria-label="並び順選択">
-  <option value="created">新しい順</option>
-  <option value="time">予定時間が近い順</option>
-</select>-->
+<form method="GET" action="/tasks/home">
+  <select name="sort" class="form-select" aria-label="並び順選択" onchange="this.form.submit()">
+    <option value="created" <%= sort === 'created' ? 'selected' : '' %>>追加順</option>
+    <option value="time" <%= sort === 'time' ? 'selected' : '' %>>予定時間が近い順</option>
+  </select>
+</form>
 <ul>
     <% for( task of tasks) { %>
-        <li><a href="/tasks/<%= task._id %>"><%= task.title %></a></li>
+        <li><a href="/tasks/<%= task._id %>"><%= task.title %> - <%= task.formattedTime%></a></li>
     <% } %>
 </ul>
 <a href="/tasks/new" class="btn btn-primary" role="button">タスクを追加</a>
