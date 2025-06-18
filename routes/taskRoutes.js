@@ -46,6 +46,7 @@ router.get('/new', catchAsync(async(req, res) => {
 router.post('/', taskValidation, catchAsync(async(req, res, next) => {
     const task = new Task(req.body.task);
     await task.save();
+    req.flash('success', 'タスクを追加しました');
     res.redirect(`/tasks/${task._id}`);
 }));
 
@@ -60,6 +61,7 @@ router.put('/:id', taskValidation, catchAsync(async(req, res, next) => {
         console.log(req.body);
         const { id } = req.params;
         const task = await Task.findByIdAndUpdate(id, req.body.task);
+        req.flash('success', 'タスクを更新しました')
         res.redirect(`/tasks/${task._id}`);
 }));
 
@@ -72,6 +74,7 @@ router.get('/:id', catchAsync(async(req, res) => {
 router.delete('/:id',  catchAsync(async(req, res) => {
     const { id } = req.params;
     await Task.findByIdAndDelete(id);
+    req.flash('error', 'タスクを削除しました')
     res.redirect('/tasks/home');
 }));
 
