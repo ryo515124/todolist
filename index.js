@@ -12,8 +12,18 @@ const dayjs = require('dayjs');
 const taskRoutes = require('./routes/taskRoutes');
 const session = require('express-session');
 const flash = require('connect-flash');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
-mongoose.connect('mongodb://localhost:27017/todolist', {useNewUrlParser: true, useUnifiedTopology: true})
+const MongoStore = require('connect-mongo');
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/todolist';
+//'mongodb://localhost:27017/todolist'
+mongoose.connect(dbUrl, 
+    {   
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => {
         console.log('MongoDBコネクションオッケー');
     })
