@@ -74,6 +74,10 @@ const taskValidation = (req, res, next) => {
     }
 }
 
+app.get('/',(req, res) => {
+    res.redirect('rasks/home');
+});
+
 app.use((req, res, next) => {
     next(new ExpressError('ページが見つかりませんでした', 404));
 });
