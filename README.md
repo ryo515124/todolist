@@ -4,7 +4,7 @@ udemyのWeb Developer Bootcampという講座を受講後のアウトプット�
 
 ## デプロイ先
 
-- [Heroku での動作確認はこちら](https://immense-brook-28283-458436aee5a0.herokuapp.com)
+- [Heroku での動作確認はこちら](https://ryo-todolist-2025-acded1d86c14.herokuapp.com)
 - 無料枠でスリープ機能があるため、初回アクセスが遅い場合があります。
 
 ## 🔧 使用技術
