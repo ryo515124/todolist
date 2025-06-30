@@ -75,7 +75,7 @@ const taskValidation = (req, res, next) => {
 }
 
 app.get('/',(req, res) => {
-    res.render('tasks/home');
+    res.redirect('tasks/home');
 });
 
 app.use((req, res, next) => {
