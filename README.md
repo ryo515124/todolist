@@ -2,6 +2,11 @@
 
 udemyのWeb Developer Bootcampという講座を受講後のアウトプットとしてToDoListを作りました。Node.js と MongoDB（Mongoose）を使った ToDo リストアプリです。タスクの登録・編集・削除・表示ができます。まだ製作段階で、画面のデザインや他の機能も追加する予定です。READ.MEはまだgithubに使い慣れていなくて、ChatGPTで生成しました。
 
+## デプロイ先
+
+- [Heroku での動作確認はこちら](https://ryo-todolist-2025-acded1d86c14.herokuapp.com)
+- 無料枠でスリープ機能があるため、初回アクセスが遅い場合があります。
+
 ## 🔧 使用技術
 
 - Node.js
