@@ -9,7 +9,10 @@ const ExpressError = require('./utils/ExpressError');
 const Joi = require('joi');
 const { todoSchema } = require('./schema');
 const dayjs = require('dayjs');
+
 const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/users')
+
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -71,6 +74,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/', userRoutes);
 app.use('/tasks', taskRoutes);
 
 const taskValidation = (req, res, next) => {

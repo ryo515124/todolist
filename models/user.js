@@ -5,10 +5,14 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unipue: true
+        unique: true
     }
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose,{
+    errorMessages: {
+        UserExistsError: 'そのユーザー名は既に使用されています'
+    }
+});
 
 module.exports = mongoose .model('User', userSchema);

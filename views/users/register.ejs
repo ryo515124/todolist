@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate') %>
+<h1>ユーザー登録</h1>
+
+<form action="/register" method="POST" class="validated-form" novalidate>
+    <div>
+        <label class="form-label"for="username">ユーザー名</label>
+        <input class="form-control" type="text" name="username" placeholder="ユーザー名" id="username" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <label class="form-label"for="email">メールアドレス</label>
+        <input class="form-control" type="email" name="email" placeholder="メールアドレス" id="email" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <div>
+        <label class="form-label"for="password">パスワード</label>
+        <input class="form-control" type="password" name="password" placeholder="パスワード" id="password" required>
+        <div class="valid-feedback">
+            OK!
+        </div>
+    </div>
+    <button class="btn btn-primary">登録</button>
+</form>
