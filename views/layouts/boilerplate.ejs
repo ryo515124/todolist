@@ -27,6 +27,20 @@
               <li class="nav-item">
                 <a class="nav-link" href="/tasks/new">新規作成</a>
               </li>
+              <% if (!currentUser) { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/login">ログイン</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">ユーザー登録</a>
+                </li>
+              <% } else { %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/logout">ログアウト</a>
+                </li>
+              <% } %>
+              
+              
             </ul>
           </div>
         </div>

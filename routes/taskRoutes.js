@@ -5,6 +5,7 @@ const ExpressError = require('../utils/ExpressError');
 const Task = require('../models/task');
 const { todoSchema } = require('../schema');
 const dayjs = require('dayjs');
+const { isLoggedin } = require('../middleware');
 
 const taskValidation = (req, res, next) => {
     // if (!req.body) throw new ExpressError('空のデータです', 400);
@@ -39,11 +40,11 @@ router.get('/home', catchAsync(async(req, res) => {
 
 const categories = ['仕事', '勉強','プライベート'];
 
-router.get('/new', catchAsync(async(req, res) => {
+router.get('/new', isLoggedin, catchAsync(async(req, res) => {
     res.render('tasks/new', { categories })
 }));
 
-router.post('/', taskValidation, catchAsync(async(req, res, next) => {
+router.post('/', isLoggedin, taskValidation, catchAsync(async(req, res, next) => {
     const task = new Task(req.body.task);
     await task.save();
     req.flash('success', 'タスクを追加しました');
@@ -51,13 +52,13 @@ router.post('/', taskValidation, catchAsync(async(req, res, next) => {
 }));
 
 
-router.get('/:id/edit', catchAsync(async(req, res) => {
+router.get('/:id/edit',isLoggedin, catchAsync(async(req, res) => {
     const { id } = req.params;
     const task = await Task.findById(id);
     res.render('tasks/edit', { task, categories });
 }));
 
-router.put('/:id', taskValidation, catchAsync(async(req, res, next) => {
+router.put('/:id', isLoggedin, taskValidation, catchAsync(async(req, res, next) => {
         console.log(req.body);
         const { id } = req.params;
         const task = await Task.findByIdAndUpdate(id, req.body.task);
@@ -65,13 +66,13 @@ router.put('/:id', taskValidation, catchAsync(async(req, res, next) => {
         res.redirect(`/tasks/${task._id}`);
 }));
 
-router.get('/:id', catchAsync(async(req, res) => {
+router.get('/:id', isLoggedin, catchAsync(async(req, res) => {
     const { id } = req.params;
     const task = await Task.findById(id);
     res.render('tasks/show', { task });
 }));
 
-router.delete('/:id',  catchAsync(async(req, res) => {
+router.delete('/:id',  isLoggedin, catchAsync(async(req, res) => {
     const { id } = req.params;
     await Task.findByIdAndDelete(id);
     req.flash('error', 'タスクを削除しました')

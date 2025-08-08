@@ -5,7 +5,10 @@ const toDoSchema = new Schema({
     title: String,
     category: String,
     description: String,
-    time: Date
+    time: Date,
+    user: { type: mongoose.Schema.Types.ObjectId,
+            ref: 'User' 
+    }
 });
 
 module.exports = mongoose.model('Task', toDoSchema);
