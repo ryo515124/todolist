@@ -94,7 +94,7 @@ const taskValidation = (req, res, next) => {
 }
 
 app.get('/',(req, res) => {
-    res.redirect('tasks/login');
+    res.redirect('/login');
 });
 
 app.use((req, res, next) => {
