@@ -6,6 +6,7 @@ const Task = require('../models/task');
 const { todoSchema } = require('../schema');
 const dayjs = require('dayjs');
 const { isLoggedin } = require('../middleware');
+const mongoose = require('mongoose');
 
 const taskValidation = (req, res, next) => {
     // if (!req.body) throw new ExpressError('空のデータです', 400);
@@ -19,8 +20,8 @@ const taskValidation = (req, res, next) => {
     }
 }
 
-router.get('/home', catchAsync(async(req, res) => {
-    const tasks = await Task.find({});
+router.get('/home', isLoggedin, catchAsync(async(req, res) => {
+    const tasks = await Task.find({user: req.user._id});
     const sort = req.query.sort;
     let sortedTasks = [...tasks];
     
@@ -46,17 +47,36 @@ router.get('/new', isLoggedin, catchAsync(async(req, res) => {
 
 router.post('/', isLoggedin, taskValidation, catchAsync(async(req, res, next) => {
     const task = new Task(req.body.task);
+    task.user = req.user._id;
     await task.save();
     req.flash('success', 'タスクを追加しました');
     res.redirect(`/tasks/${task._id}`);
 }));
 
 
-router.get('/:id/edit',isLoggedin, catchAsync(async(req, res) => {
+router.get('/:id/edit', isLoggedin, catchAsync(async(req, res) => {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        req.flash('error', '不正なタスクIDです');
+        return res.redirect('/tasks/home');
+    }
     const task = await Task.findById(id);
+    if (!task) {
+        req.flash('error', 'タスクが見つかりません');
+        return res.redirect('/tasks/home');
+    }
     res.render('tasks/edit', { task, categories });
 }));
+
+router.post('/:id/toggle', isLoggedin, async(req, res) => {
+    const {id} = req.params;
+    const task = await Task.findById(id);
+
+    task.done = !task.done;
+    await task.save();
+
+    res.redirect('/tasks/home');
+});
 
 router.put('/:id', isLoggedin, taskValidation, catchAsync(async(req, res, next) => {
         console.log(req.body);

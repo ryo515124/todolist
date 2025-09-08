@@ -1,0 +1,16 @@
+.title {
+    margin-top: 2rem;
+}
+
+.btn {
+    margin-top: 1rem
+}
+
+.btn-light {
+    color: white;
+    background-color: #103641;
+}
+
+.btn-danger {
+    background-color: #c30019;
+}

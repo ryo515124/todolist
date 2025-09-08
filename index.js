@@ -9,6 +9,7 @@ const ExpressError = require('./utils/ExpressError');
 const Joi = require('joi');
 const { todoSchema } = require('./schema');
 const dayjs = require('dayjs');
+const { setUsername } = require('./middleware');
 
 const taskRoutes = require('./routes/taskRoutes');
 const userRoutes = require('./routes/users')
@@ -45,6 +46,7 @@ app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(methodOverride('_method'));
@@ -66,6 +68,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(setUsername);
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -91,7 +94,7 @@ const taskValidation = (req, res, next) => {
 }
 
 app.get('/',(req, res) => {
-    res.redirect('tasks/home');
+    res.redirect('tasks/login');
 });
 
 app.use((req, res, next) => {
@@ -109,4 +112,4 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`ポート${port}で待受中`);
-});
+}); 

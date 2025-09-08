@@ -1,0 +1,34 @@
+.card {
+    background-color: #f0f0f0d8;
+    border: none;
+}
+
+.card.done {
+    background-color: #1036417e;
+    border: none;
+}
+
+.form-check-input {
+    accent-color: #c30019;
+}
+
+.form-check-input {
+    margin-bottom: 0.7rem;
+}
+
+.badge {
+    background-color: #c30019!important;
+}
+
+.badge.done {
+    background-color: gray!important;
+}
+
+.btn {
+    color: white;
+    background-color: #103641;
+}
+
+.title {
+    padding-top: 1rem; 
+}

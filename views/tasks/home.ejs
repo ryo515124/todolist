@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate') %>
-<div class="container py-2">
-  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-    <h3>タスク一覧</h3>
+<% pageCss = '/css/home.css' %>
 
+<div class="container py-2">
+  <div class="d-flex justify-content-between">
+    <h3 class="title">タスク一覧</h3>
     <form method="GET" action="/tasks/home">
       <select name="sort" class="form-select" aria-label="並び順選択" onchange="this.form.submit()">
         <option value="created" <%= sort === 'created' ? 'selected' : '' %>>追加順</option>
@@ -12,20 +13,29 @@
   </div>
 </div>
     <% for ( task of tasks) { %>
-      <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="..." class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title"><a href="/tasks/<%= task._id %>" class="text-decoration-none text-dark"><%= task.title %></a></h5>
-              <p class="card-text"><%= task.description %></p>
-              <p class="card-text"><small class="text-body-secondary">期限 : <%= task.formattedTime%></small></p>
+      <div class="card <%= task.done ? 'done' : '' %> mb-3" style="max-width: 540px;">
+          <div class="card-body">
+            <div class="card-title d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <form method="POST" action="/tasks/<%= task._id %>/toggle" class="me-2">
+                  <input class="form-check-input" type="checkbox"
+                         onChange="this.form.submit()" <%= task.done ? 'checked' : '' %>>
+                </form>
+                <h5>
+                  <a href="/tasks/<%= task._id %>" 
+                     class="text-decoration-none text-dark">
+                     <%= task.title %>
+                 </a>
+                </h5>
+              </div>
+                <span class="badge <%= task.done ? 'done' : '' %>"><%= task.done ? '完了' : '進行中' %></span>
             </div>
+            <p class="card-text"><%= task.description %></p>
+            <p class="card-text">
+              <small class="text-body-secondary">期限 : <%= task.formattedTime%></small>
+            </p>
           </div>
-        </div>
       </div>
     <% } %>
     
-<a href="/tasks/new" class="btn btn-primary" role="button">タスクを追加</a>
+<a href="/tasks/new" class="btn" role="button">タスクを追加</a>

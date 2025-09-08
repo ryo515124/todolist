@@ -1,0 +1,24 @@
+.body {
+      font-family: sans-serif;
+    }
+
+.my-navbar {
+  background-color: #103641;
+}
+
+.nav-link {
+  color: white;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+.offcanvas {
+  background-color: #103641d2;
+}
+
+.offcanvas-title {
+  color: white;
+}
+

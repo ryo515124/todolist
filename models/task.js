@@ -8,6 +8,10 @@ const toDoSchema = new Schema({
     time: Date,
     user: { type: mongoose.Schema.Types.ObjectId,
             ref: 'User' 
+    },
+    done: {
+        type: Boolean,
+        default: false
     }
 });
 

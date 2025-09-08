@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const catchAsync = require('../utils/catchAsync');
 const passport = require('passport');
-const { storeReturnTo } = require('../middleware')
+const { storeReturnTo, returnTo} = require('../middleware')
 router.get('/register', (req, res) => {
     res.render('users/register')
 });
@@ -28,9 +28,30 @@ router.get('/login', (req, res) => {
     res.render('users/login');
 });
 
-router.post('/login', storeReturnTo, passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+router.get('/demoLogin', async (req, res, next) => {
+    try {
+        const demoUser = await User.findOne({username: "demo"});
+        if (!demoUser) {
+            req.flash('error', 'デモユーザーが存在しません');
+            return res.redirect('/login');
+        }
+        req.login(demoUser, err => {
+        if (err) return next(err);
+            req.flash('success', 'ようこそ');
+            res.redirect('/tasks/home');
+        })
+    } catch(err) {
+        console.log(err);
+        req.flash('error', 'ログインに失敗しました')
+        res.redirect('/login');
+    } 
+    
+})
+
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login', keepSessionInfo: true }), (req, res) => {
     req.flash('success', 'おかえりなさい');
-    const redirectUrl = res.locals.returnTo || 'tasks/home';
+    console.log(returnTo);
+    const redirectUrl = res.locals.returnTo || '/tasks/home';
     res.redirect(redirectUrl);
 });
 
