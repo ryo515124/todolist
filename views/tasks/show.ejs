@@ -1,12 +1,24 @@
 <% layout('layouts/boilerplate') %>
+<% pageCss = '/css/show.css' %>
+<div class="card">
+    <div class="d-flex custom-align">
+        <h3 class="title"><%= task.title %></h3>
+    </div>
 
-<h1><%= task.title %></h1>
-<ul>
-    <li>カテゴリ: <%= task.category %></li>
-    <li>備考: <%= task.description %></li>
-</ul>
-<a href="/tasks/<%= task._id %>/edit" class="btn btn-primary" role="button">編集</a>
-<form action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
-    <button type="submit" class="btn btn-danger">削除</button>
-</form>
+    <div class="custom-align">
+        <div class="detail">カテゴリ: <%= task.category %></div>
+        <div class="detail">備考: <%= task.description %></div>
+    </div>
+
+
+
+
+    <div class="d-flex custom-align-button justify-content-end">
+        <a href="/tasks/<%= task._id %>/edit" class="btn btn-light" role="button">編集</a>
+        <form action="/tasks/<%= task._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">削除</button>
+        </form>
+    </div>
+</div>
+
 <a href="/tasks/home">やること一覧へ</a>

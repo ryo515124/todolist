@@ -1,0 +1,32 @@
+.title {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.detail {
+    font-size: 1.1em;
+}
+
+.btn-light {
+    color: white;
+    background-color: #103641;
+}
+
+.btn-danger {
+    background-color: #c30019;
+}
+
+.custom-align {
+    margin-left: 1rem;
+}
+
+.custom-align-button {
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    margin-top: 2rem;
+    background-color: #f0f0f0d8;
+    border: none;
+}

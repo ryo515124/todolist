@@ -32,3 +32,8 @@
 .title {
     padding-top: 1rem; 
 }
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}

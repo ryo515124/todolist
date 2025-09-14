@@ -7,14 +7,10 @@
 }
 
 .btn {
-    margin-top: 1rem;
+    margin-top: 1rem
 }
 
 .btn-light {
     color: white;
     background-color: #103641;
-}
-
-.btn-danger {
-    background-color: #c30019;
 }
